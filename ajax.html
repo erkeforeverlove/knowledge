@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function btclick() {
+        //创建XMLHttpRequest对象
+        xmlhttp = null;
+        if(window.XMLHttpRequest){//code for  Firefox ,opera,IE7,etc
+            var xmlhttp = new XMLHttpRequest();
+        }else if(window.ActiveXObject){//code for IE6,IE5
+            var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //编写回调函数
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readystate ==4 && xmlhttp.status == 200) {
+                alert(xmlhttp.responseText);
+            }
+        }
+        //get
+        //open设置请求方式和请求路径  以及是否异步
+        xmlhttp.open("GET",url,true);
+        xml.send();
+        //post
+         //open设置请求方式和请求路径  以及是否异步
+        xmlhttp.open("POST",url,true);
+        //设置请求头
+        xmlhttp.setRequestHeader("content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("username=张三");
+        //想要提交的简单参数在get方法中直接拼接到url后边即可  在post中写道send方法参数中即可
+    }
+</script>
+</html>

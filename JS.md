@@ -1,4 +1,4 @@
-### 1.js数据类型
+###  1.js数据类型
 
 ###### 基本数据类型  
 
@@ -63,7 +63,7 @@ __proto__只能在学习或调试的环境下使用。
 
 ### 3.判断数组对象
 
-###### Array.isArray
+###### Array.isArray()
 
 ###### instanceof
 
@@ -123,7 +123,7 @@ console.log(arr2); 　　　　　　　　//[1, 4, 7, 8, 9, 10]
 
 Array.push()在数组的后面添加新加元素，此方法改变了数组的长度
 
-Array.pop()在数组后面删除最后一个元素，并返回数组，此方法改变了数组的长度
+Array.pop()删除数组最后一个元素，并返回数组，此方法改变了数组的长度
 
 ```
 var arr = ["Lily","lucy","Tom"];
@@ -135,7 +135,7 @@ console.log(item); 　　　　　　　　　　 // Sean
 console.log(arr); 　　　　　　　　　　  // ["Lily", "lucy", "Tom", "Jack"]
 ```
 
-Array.shift()在数组后面删除第一个元素，并返回数组，此方法改变了数组的长度
+Array.shift()在数组后面删除第一个元素，并返回被删除的元素，此方法改变了数组的长度
 
 Array.unshift()将一个或多个元素添加到数组的开头，并返回新数组的长度
 
@@ -280,8 +280,6 @@ String.split()将一个字符串分割为子字符串，然后将结果作为字
        console.log("大家好，我是"+this.name+",喜欢"+this.like);
    }
    ```
-
-   
 
 2. ###### 工厂模式
 
@@ -481,21 +479,21 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
 
    ```jsx
    // 原型链继承
-           function Person(){
-               this.name = 'xiaopao';
-           }
+   function Person(){
+       this.name = 'xiaopao';
+   }
    
-           Person.prototype.getName = function(){
-               console.log(this.name);
-           }
+   Person.prototype.getName = function(){
+       console.log(this.name);
+   }
    
-           function Child(){
-               
-           }
+   function Child(){
+       
+   }
    
-           Child.prototype = new Person();
-           var child1 = new Child();
-           child1.getName(); // xiaopao
+   Child.prototype = new Person();
+   var child1 = new Child();
+   child1.getName(); // xiaopao
    ```
 
    缺点：
@@ -545,19 +543,19 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
            var child1 = new Child();
            var child2 = new Child();
            child1.colors.push('yellow');
-           console.log(child1.name);
            console.log(child1.colors); // ["red", "blue", "green", "yellow"]
            console.log(child2.colors); // ["red", "blue", "green"]
    ```
+   
 
-   优点：
+优点：
    1.避免了引用类型的属性被所有实例共享
    2.可以在Child中向Parent传参
    缺点：
    1.只是子类的实例，不是父类的实例
    2.方法都在构造函数中定义，每次创建实例都会创建一遍方法
 
-   ```jsx
+```jsx
    // 借用构造函数继承， 向Parent传参
      		function Person(name){
                this.name = name;
@@ -576,7 +574,7 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
            console.log(child1.name); // xiaopao
            console.log(child2.name); // lulu
            console.log(child1 instanceof Person); // false   不能识别是Person的实例
-   ```
+```
 
 3. ###### 组合式继承
 
@@ -619,13 +617,11 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
 
 4. ###### 原型式继承
 
-   ```jsx
+   ```js
            // 原型式继承
-   function CreateObj(o){
+   		function CreateObj(o){
                function F(){}
                F.prototype = o;
-               console.log(o.__proto__ === Object.prototype);
-               console.log(F.prototype.constructor === Object); // true
                return new F();
            }
    
@@ -645,14 +641,12 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
            person1.friend = ['lulu'];
            // console.log(person1.friend); // ["lulu"]
            // console.log(person.friend); //  ["daisy", "kelly", "taylor"]
-           // 注意： 这里修改了person1.name的值，person2.name的值并未改变，并不是因为person1和person2有独立的name值，而是person1.name='person1'是给person1添加了name值，并非修改了原型上的name值
-           // 因为我们找对象上的属性时，总是先找实例上对象，没有找到的话再去原型对象上的属性。实例对象和原型对象上如果有同名属性，总是先取实例对象上的值
    ```
-
+   
    缺点： 包含引用类型的属性值始终都会共享相应的值， 这点跟原型链继承一样
-    注意： 这里修改了person1.name的值，person2.name的值并未改变，并不是因为person1和person2有独立的name值，而是person1.name='person1'是给person1添加了name值，并非修改了原型上的name值。
+    注意： 这里修改了person1.name的值，person2.name的值并未改变，并不是因为person1和person2有独立的name值，而是person1.name='person1'是给person1添加了name值，并非修改了原型上的name值。因为我们找对象上的属性时，总是先找实例上对象，没有找到的话再去原型对象上的属性。实例对象和原型对象上如果有同名属性，总是先取实例对象上的值
 
-   **因为我们找对象上的属性时，总是先找实例上对象，没有找到的话再去原型对象上的属性。实例对象和原型对象上如果有同名属性，总是先取实例对象上的值**
+**因为我们找对象上的属性时，总是先找实例上对象，没有找到的话再去原型对象上的属性。实例对象和原型对象上如果有同名属性，总是先取实例对象上的值**
 
    ![img](https://upload-images.jianshu.io/upload_images/15216392-e770e4842ea8ab08.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
@@ -735,10 +729,12 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
            console.log(child1); 
    ```
 
-   ![img](https://upload-images.jianshu.io/upload_images/15216392-0d60dfce7d7aa99a.png?imageMogr2/auto-orient/strip|imageView2/2/w/816/format/webp)优点： 这种方式的高效率体现它只调用了一次Parent构造函数，并且因此避免了再Parent.prototype上面创建不必要的，多余的属性。普遍认为寄生组合式继承是引用类型最理想的继承方式
+   ![img](https://upload-images.jianshu.io/upload_images/15216392-0d60dfce7d7aa99a.png?imageMogr2/auto-orient/strip|imageView2/2/w/816/format/webp)
+
+   优点： 这种方式的高效率体现它只调用了一次Parent构造函数，并且因此避免了再Parent.prototype上面创建不必要的，多余的属性。普遍认为寄生组合式继承是引用类型最理想的继承方式
 
    例题：已知如下类Animal，要求设计一个Cat类继承自Animal，并实现如下功能：
-
+   
    ```jsx
    Animal:
    function Animal(){
@@ -765,10 +761,11 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
        this.showName3 = function(){
            console.log(this.__super.name + "=>" + this.name); 
        }
-   }
+}
    ```
+   
 
-   代码运行：
+代码运行：
    // 请完善Cat部分相关代码，得到如下结果：
 
    ```jsx
@@ -776,7 +773,7 @@ JavaScript 默认并不会**复制**对象的属性，相反，JavaScript 只是
    console.log(cat instanceof Animal ); // 得到：true
    cat.showName1();     // 得到："Cat" (需要读到Cat中的name属性) 
    cat.showName2();    //  得到：”Animal" (需要读到Animal中的name属性) 
-   cat.showName3();    //得到：”Animal" => "Cat" (需要同时读到Cat中的name和Animal中的name)
+cat.showName3();    //得到：”Animal" => "Cat" (需要同时读到Cat中的name和Animal中的name)
    ```
 
    答案解析：
@@ -1404,7 +1401,7 @@ a = 5; //报错，Uncaught TypeError: Assignment to constant variable.
 
 事件处理函数简单的话还好，但是如果是复杂的dom操作，可能会导致整个UI卡顿设置浏览器奔溃，而我们往往的结果就是事件结束后处理函数执行一次就行了。于是我们可以通过函数的去抖来处理
 
-**去抖（debounce）**
+**防抖（debounce）**
 
 函数调用n秒后才会执行，如果函数在n秒内被调用的话则函数不执行，重新计算执行时间
 
@@ -1482,3 +1479,21 @@ window.onresize=throttle(resizehandler,500);
  ![img](https://images2015.cnblogs.com/blog/746387/201702/746387-20170221153042929-871658057.png)
 
 需要注意的一点：**函数的节流和函数的去抖都是通过减少实际逻辑处理过程的执行来提高事件处理函数运行性能的手段，并没有实质上减少事件的触发次数**。
+
+##### 节流和防抖的区别
+debounce: 当调用动作n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间。
+throttle：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期。
+**debounce使用场景**
+1. scroll事件（资源的加载）
+2. mousemove事件（拖拽）
+3. resize事件（响应式布局样式）
+4. keyup事件（输入框文字停止打字后才进行校验）
+debounce电梯：
+假设你正在准备乘坐电梯,并且电梯门准备关上然后上升的时候,你的同事来了,出于礼貌,我们需要停止电梯的关闭,让同事进入.假设源源不断的有同事进来的话,电梯就需要处于一种待机的状态,一直等待人员的进入,直到没有新的同事进入或者说电梯满了,这个时候,电梯才能运行.另外,同事的进入需要在电梯门的关闭之前,否则的话,就只能等下一趟了。
+**throttle使用场景**
+1. click事件（不停快速点击按钮，减少触发频次）
+2. scroll事件（返回顶部按钮出现\隐藏事件触发）
+3. keyup事件（输入框文字与显示栏内容复制同步）
+4. 减少发送ajax请求，降低请求频率
+throttle电梯：
+throttle电梯不想debounce电梯一样会无限的等待,而是我们设定一个时间,例如10s,那么10s内,其他的人可以不断的进入电梯,但是,一旦10s过去了,那么无论如何,电梯都会进入运行的状态。

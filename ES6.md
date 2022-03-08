@@ -458,3 +458,58 @@ expression:  一个 Promise  对象或者任何要等待的值。
 ```
 
 ![img](https://upload-images.jianshu.io/upload_images/6522842-6e6b1cefa95688c9.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+
+### 6.迭代器iterator
+
+iterator迭代器是ES6非常重要的概念，但是很多人对它了解的不多，但是它却是另外4个ES6常用特性的实现基础（解构赋值，剩余/扩展运算符，生成器，for of循环），了解迭代器的概念有助于了解另外4个核心语法的原理，另外ES6新增的Map,Set数据结构也有使用到它，所以我放到前面来讲
+
+对于可迭代的数据解构，ES6在内部部署了一个[Symbol.iterator]属性，它是一个函数，执行后会返回iterator对象（也叫迭代器对象），而生成iterator对象[Symbol.iterator]属性叫iterator接口,有这个接口的数据结构即被视为可迭代的
+
+默认部署iterator接口的数据结构有以下几个，注意普通对象默认是没有iterator接口的（可以自己创建iterator接口让普通对象也可以迭代）
+
+- Array
+- Map
+- Set
+- String
+- TypedArray（类数组）
+- 函数的 arguments 对象
+- NodeList 对象
+
+iterator迭代器是一个对象，它具有一个next方法所以可以这么调用
+
+```
+let arr = [1,2,3];
+let iterator = arr[Symbol.iterator]();
+iterator.next();  //{value: 1, done: false}
+iterator.next();  //{value: 2, done: false}
+iterator.next();  //{value: 3, done: false}
+```
+
+next方法返回又会返回一个对象，有value和done两个属性，value即每次迭代之后返回的值，而done表示是否还需要再次循环，可以看到当value为undefined时，done为true表示循环终止
+
+梳理一下
+
+- 可迭代的数据结构会有一个[Symbol.iterator]方法
+- [Symbol.iterator]执行后返回一个iterator对象
+- iterator对象有一个next方法
+- 执行一次next方法(消耗一次迭代器)会返回一个有value,done属性的对象
+
+### 7.for ... of循环
+
+for ... of是作为ES6新增的遍历方式,允许遍历一个含有iterator接口的数据结构并且返回各项的值,和ES3中的for ... in的区别如下
+
+1. for ... of只能用在可迭代对象上,获取的是迭代器返回的value值,for ... in 可以获取所有对象的键名
+2. for ... in会遍历对象的整个原型链,性能非常差不推荐使用,而for ... of只遍历当前对象不会遍历它的原型链
+3. 对于数组的遍历,for ... in会返回数组中所有可枚举的属性(包括原型链上可枚举的属性),for ... of只返回数组的下标对应的属性值
+
+for ... of循环的原理其实也是利用了可迭代对象内部部署的iterator接口,如果将for ... of循环分解成最原始的for循环,内部实现的机制可以这么理解
+
+![img](https://user-gold-cdn.xitu.io/2019/2/12/168df9eba84cafbe?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+可以看到只要满足第二个条件(iterator.next()存在且res.done为true)就可以一直循环下去,并且每次把迭代器的next方法生成的对象赋值给res,然后将res的value属性赋值给for ... of第一个条件中声明的变量即可,res的done属性控制是否继续遍历下去
+
+for... of循环同时支持break,continue,return(在函数中调用的话)并且可以和对象解构赋值一起使用
+
+![img](https://user-gold-cdn.xitu.io/2019/2/12/168df9ebb0fe5712?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+arr数组每次使用for ... of循环都返回一对象({a:1},{a:2},{a:3}),然后会经过对象解构,寻找属性为a的值,赋值给obj.a,所以在每轮循环的时候obj.a会分别赋值为1,2,3

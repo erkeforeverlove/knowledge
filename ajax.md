@@ -15,7 +15,7 @@ AJAX 是一种用于创建快速动态网页的技术。
         var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : ActiveXObject("microsoft.XMLHttp")
         xhr.open("get",url,true);
         xhr.send();
-        xhr.onreadysattechange = () =>{
+        xhr.onreadystatechange = () =>{
             if(xhr.readystate == 4){
                 if(xhr.status == 200){
                     var data = xhr.responseTEXT;
@@ -47,8 +47,9 @@ AJAX 是一种用于创建快速动态网页的技术。
 		xmlhttp.open("get", "/Ajax/ajax2?username=张三");//一个servlet，后面还可以写是否同步
 		//send 发送
 		xmlhttp.send();
+     }
+</script>        
 
-</script>
 ##### post方式
 
 <script type="text/javascript">
